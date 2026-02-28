@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -35,9 +35,11 @@
         .timer-value { font-size: 2.5rem; font-weight: 700; display: block; line-height: 1; margin-bottom: 4px; }
         .timer-item.days .timer-value { font-size: 3.5rem; }
         .timer-label { font-size: 0.75rem; opacity: 0.8; }
-        .quote { margin-top: 40px; text-align: center; font-style: italic; font-size: 1.1rem; opacity: 0.9; max-width: 400px; line-height: 1.8; animation: fadeIn 1s ease 0.6s both; }
+        .quote { margin-top: 40px; text-align: center; font-style: italic; font-size: 1.1rem; opacity: 0.9; max-width: 450px; line-height: 1.8; animation: fadeIn 1s ease 0.6s both; min-height: 80px; display: flex; flex-direction: column; justify-content: center; }
+        .quote-text { margin-bottom: 8px; }
+        .quote-author { font-size: 0.9rem; opacity: 0.7; font-style: normal; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @media (max-width: 480px) { .names { font-size: 2rem; } .timer-value { font-size: 2rem; } .timer-item.days .timer-value { font-size: 2.8rem; } .avatar { width: 120px; height: 120px; } }
+        @media (max-width: 480px) { .names { font-size: 2rem; } .timer-value { font-size: 2rem; } .timer-item.days .timer-value { font-size: 2.8rem; } .avatar { width: 120px; height: 120px; } .quote { font-size: 1rem; padding: 0 10px; } }
     </style>
 </head>
 <body>
@@ -51,39 +53,63 @@
         
         <div class="timer-card">
             <div class="meet-date">
-                <p class="meet-label">我们相遇于</p>
-                <p class="meet-value">2015年6月15日</p>
+                <p class="meet-label">We've been together since</p>
+                <p class="meet-value">June 15, 2015</p>
             </div>
             
             <div class="timer-grid">
                 <div class="timer-item days">
                     <span class="timer-value" id="days">--</span>
-                    <span class="timer-label">天</span>
+                    <span class="timer-label">Days</span>
                 </div>
                 <div class="timer-item">
                     <span class="timer-value" id="hours">--</span>
-                    <span class="timer-label">小时</span>
+                    <span class="timer-label">Hours</span>
                 </div>
                 <div class="timer-item">
                     <span class="timer-value" id="minutes">--</span>
-                    <span class="timer-label">分钟</span>
+                    <span class="timer-label">Minutes</span>
                 </div>
                 <div class="timer-item" style="grid-column: span 2;">
                     <span class="timer-value" id="seconds">--</span>
-                    <span class="timer-label">秒</span>
+                    <span class="timer-label">Seconds</span>
                 </div>
             </div>
         </div>
         
-        <p class="quote">
-            爱是恒久忍耐，又有恩慈<br>
-            爱是不嫉妒，不自夸，不张狂
-        </p>
+        <div class="quote" id="loveQuote">
+            <div class="quote-text">Loading...</div>
+            <div class="quote-author"></div>
+        </div>
     </div>
     
     <script>
         (function() {
             const MEET_DATE = new Date('2015-06-15T00:00:00');
+            
+            // Love quotes collection
+            const loveQuotes = [
+                { text: "Love is composed of a single soul inhabiting two bodies.", author: "Aristotle" },
+                { text: "The best thing to hold onto in life is each other.", author: "Audrey Hepburn" },
+                { text: "I have found the one whom my soul loves.", author: "Song of Solomon" },
+                { text: "In all the world, there is no heart for me like yours.", author: "Maya Angelou" },
+                { text: "To love and be loved is to feel the sun from both sides.", author: "David Viscott" },
+                { text: "You don't love someone for their looks, or their clothes, or for their fancy car, but because they sing a song only you can hear.", author: "Oscar Wilde" },
+                { text: "If I know what love is, it is because of you.", author: "Hermann Hesse" },
+                { text: "I would rather spend one lifetime with you, than face all the ages of this world alone.", author: "J.R.R. Tolkien" },
+                { text: "You are my sun, my moon, and all my stars.", author: "E.E. Cummings" },
+                { text: "Being deeply loved by someone gives you strength, while loving someone deeply gives you courage.", author: "Lao Tzu" },
+                { text: "Love isn't something you find. Love is something that finds you.", author: "Loretta Young" },
+                { text: "The greatest thing you'll ever learn is just to love and be loved in return.", author: "Eden Ahbez" },
+                { text: "I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more.", author: "Angelita Lim" },
+                { text: "You are the finest, loveliest, tenderest, and most beautiful person I have ever known—and even that is an understatement.", author: "F. Scott Fitzgerald" },
+                { text: "For the two of us, home isn't a place. It is a person. And we are finally home.", author: "Stephanie Perkins" },
+                { text: "I've tried so many times to think of a new way to say it, and it's still I love you.", author: "Zelda Fitzgerald" },
+                { text: "I swear I couldn't love you more than I do right now, and yet I know I will tomorrow.", author: "Leo Christopher" },
+                { text: "If you live to be a hundred, I want to live to be a hundred minus one day so I never have to live without you.", author: "A.A. Milne" },
+                { text: "To the world you may be one person, but to one person you are the world.", author: "Bill Wilson" },
+                { text: "Love is not about how many days, months, or years you have been together. Love is about how much you love each other every single day.", author: "Unknown" }
+            ];
             
             function updateTimer() {
                 var now = new Date();
@@ -94,14 +120,24 @@
                 var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                document.getElementById('days').textContent = days;
+                document.getElementById('days').textContent = days.toLocaleString();
                 document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
                 document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
                 document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
             }
             
+            function displayRandomQuote() {
+                var quoteEl = document.getElementById('loveQuote');
+                var randomIndex = Math.floor(Math.random() * loveQuotes.length);
+                var quote = loveQuotes[randomIndex];
+                
+                quoteEl.querySelector('.quote-text').textContent = '"' + quote.text + '"';
+                quoteEl.querySelector('.quote-author').textContent = '— ' + quote.author;
+            }
+            
             updateTimer();
             setInterval(updateTimer, 1000);
+            displayRandomQuote();
         })();
     </script>
 </body>
