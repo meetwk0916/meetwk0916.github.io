@@ -86,6 +86,10 @@
     <script>
         (function() {
             const MEET_DATE = new Date('2015-06-15T00:00:00');
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
             
             // Love quotes collection
             const loveQuotes = [
@@ -120,10 +124,10 @@
                 var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                document.getElementById('days').textContent = days.toLocaleString();
-                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                daysEl.textContent = days.toLocaleString();
+                hoursEl.textContent = hours.toString().padStart(2, '0');
+                minutesEl.textContent = minutes.toString().padStart(2, '0');
+                secondsEl.textContent = seconds.toString().padStart(2, '0');
             }
             
             function displayRandomQuote() {
