@@ -41,7 +41,9 @@
 </head>
 <body>
     <div class="bg-animation"></div>
+    <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
     <div class="container">
+        <div class="anniversary-banner" id="anniversaryBanner"></div>
         <div class="profile">
             <img src="assets/img/logo.png" alt="Walter & Selina" class="avatar">
             <h1 class="names">Walter <span role="img" aria-label="love">❤️</span> Selina</h1>
@@ -72,6 +74,8 @@
                     <span class="timer-label">Seconds</span>
                 </div>
             </div>
+
+            <div class="milestone-info" id="milestoneInfo"></div>
         </div>
 
         <div class="quote" id="loveQuote" role="button" tabindex="0" aria-describedby="quoteHint">
