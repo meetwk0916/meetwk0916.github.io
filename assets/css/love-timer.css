@@ -1,0 +1,274 @@
+/**
+ * Walter & Selina Love Timer Styles
+ * A romantic, responsive love timer page.
+ */
+
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Animated Background */
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.bg-animation::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        rgba(255, 255, 255, 0.03) 1deg,
+        transparent 2deg
+    );
+    animation: rotate 120s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Layout */
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Profile Section */
+.profile {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.names {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.names span {
+    display: inline-block;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+    letter-spacing: 4px;
+}
+
+/* Timer Card */
+.timer-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeInUp 1s ease 0.3s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.meet-date {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.meet-label {
+    font-size: 0.875rem;
+    opacity: 0.8;
+    margin-bottom: 8px;
+}
+
+.meet-value {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #FFE66D;
+}
+
+.timer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.timer-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+}
+
+.timer-item.days {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.timer-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.timer-item.days .timer-value {
+    font-size: 3.5rem;
+}
+
+.timer-label {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+/* Quote Section */
+.quote {
+    margin-top: 40px;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 450px;
+    line-height: 1.8;
+    animation: fadeIn 1s ease 0.6s both;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.quote:hover,
+.quote:focus-visible {
+    opacity: 1;
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.05);
+    outline: 2px solid rgba(255, 255, 255, 0.3);
+    outline-offset: 4px;
+}
+
+.quote-text {
+    margin-bottom: 8px;
+    transition: opacity 0.3s;
+}
+
+.quote-author {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    font-style: normal;
+    transition: opacity 0.3s;
+}
+
+.quote-hint {
+    font-size: 0.75rem;
+    opacity: 0;
+    font-style: normal;
+    margin-top: 8px;
+    transition: opacity 0.2s;
+}
+
+.quote:hover .quote-hint,
+.quote:focus-visible .quote-hint {
+    opacity: 0.7;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .names {
+        font-size: 2rem;
+    }
+
+    .timer-value {
+        font-size: 2rem;
+    }
+
+    .timer-item.days .timer-value {
+        font-size: 2.8rem;
+    }
+
+    .avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .quote {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+}

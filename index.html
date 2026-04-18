@@ -9,41 +9,35 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="renderer" content="webkit">
-    <title>Walter & Selina ❤️</title>    
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; overflow-x: hidden; }
-        .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        .bg-animation::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255,255,255,0.03) 1deg, transparent 2deg); animation: rotate 120s linear infinite; }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .container { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; position: relative; z-index: 1; }
-        .profile { text-align: center; margin-bottom: 40px; animation: fadeInDown 1s ease; }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        .avatar { width: 140px; height: 140px; border-radius: 50%; border: 4px solid rgba(255,255,255,0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.15); margin-bottom: 20px; }
-        .names { font-size: 2.5rem; font-weight: 700; margin-bottom: 8px; }
-        .names span { display: inline-block; animation: heartbeat 1.5s ease-in-out infinite; }
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        .subtitle { font-size: 1rem; opacity: 0.9; letter-spacing: 4px; }
-        .timer-card { background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); border-radius: 24px; padding: 40px 30px; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.2); animation: fadeInUp 1s ease 0.3s both; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .meet-date { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); }
-        .meet-label { font-size: 0.875rem; opacity: 0.8; margin-bottom: 8px; }
-        .meet-value { font-size: 1.5rem; font-weight: 500; color: #FFE66D; }
-        .timer-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-        .timer-item { background: rgba(255,255,255,0.1); border-radius: 16px; padding: 20px 16px; text-align: center; }
-        .timer-item.days { grid-column: span 2; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .timer-value { font-size: 2.5rem; font-weight: 700; display: block; line-height: 1; margin-bottom: 4px; }
-        .timer-item.days .timer-value { font-size: 3.5rem; }
-        .timer-label { font-size: 0.75rem; opacity: 0.8; }
-        .quote { margin-top: 40px; text-align: center; font-style: italic; font-size: 1.1rem; opacity: 0.9; max-width: 450px; line-height: 1.8; animation: fadeIn 1s ease 0.6s both; min-height: 80px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; transition: opacity 0.2s, transform 0.2s; padding: 10px; border-radius: 8px; }
-        .quote:hover, .quote:focus-visible { opacity: 1; transform: scale(1.02); background: rgba(255, 255, 255, 0.05); outline: 2px solid rgba(255, 255, 255, 0.3); outline-offset: 4px; }
-        .quote-text { margin-bottom: 8px; transition: opacity 0.3s; }
-        .quote-author { font-size: 0.9rem; opacity: 0.7; font-style: normal; transition: opacity 0.3s; }
-        .quote-hint { font-size: 0.75rem; opacity: 0; font-style: normal; margin-top: 8px; transition: opacity 0.2s; }
-        .quote:hover .quote-hint, .quote:focus-visible .quote-hint { opacity: 0.7; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @media (max-width: 480px) { .names { font-size: 2rem; } .timer-value { font-size: 2rem; } .timer-item.days .timer-value { font-size: 2.8rem; } .avatar { width: 120px; height: 120px; } .quote { font-size: 1rem; padding: 0 10px; } }
-    </style>
+
+    <!-- SEO & Social -->
+    <title>Walter & Selina ❤️</title>
+    <meta name="description" content="Walter & Selina's love timer. Together since June 15, 2015.">
+    <meta name="theme-color" content="#764ba2">
+    <meta name="keywords" content="Walter, Selina, love, timer, anniversary">
+    <link rel="canonical" href="https://meetwk0916.github.io/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Walter & Selina ❤️">
+    <meta property="og:description" content="Walter & Selina's love timer. Together since June 15, 2015.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://meetwk0916.github.io/">
+    <meta property="og:image" content="https://meetwk0916.github.io/assets/img/logo.png">
+    <meta property="og:site_name" content="Walter & Selina">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Walter & Selina ❤️">
+    <meta name="twitter:description" content="Walter & Selina's love timer. Together since June 15, 2015.">
+    <meta name="twitter:image" content="https://meetwk0916.github.io/assets/img/logo.png">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/love-timer.css">
 </head>
 <body>
     <div class="bg-animation"></div>
@@ -53,13 +47,13 @@
             <h1 class="names">Walter <span role="img" aria-label="love">❤️</span> Selina</h1>
             <p class="subtitle">Since 2015</p>
         </div>
-        
+
         <div class="timer-card">
             <div class="meet-date">
                 <p class="meet-label">We've been together since</p>
                 <p class="meet-value">June 15, 2015</p>
             </div>
-            
+
             <div class="timer-grid">
                 <div class="timer-item days">
                     <span class="timer-value" id="days">--</span>
@@ -79,94 +73,14 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="quote" id="loveQuote" role="button" tabindex="0" aria-describedby="quoteHint">
             <div class="quote-text">Loading...</div>
             <div class="quote-author"></div>
             <div class="quote-hint" id="quoteHint">Click for another quote</div>
         </div>
     </div>
-    
-    <script>
-        (function() {
-            const MEET_DATE = new Date('2015-06-15T00:00:00');
-            const MS_PER_SECOND = 1000;
-            const MS_PER_MINUTE = MS_PER_SECOND * 60;
-            const MS_PER_HOUR = MS_PER_MINUTE * 60;
-            const MS_PER_DAY = MS_PER_HOUR * 24;
-            
-            // Love quotes collection
-            const loveQuotes = [
-                { text: "Love is composed of a single soul inhabiting two bodies.", author: "Aristotle" },
-                { text: "The best thing to hold onto in life is each other.", author: "Audrey Hepburn" },
-                { text: "I have found the one whom my soul loves.", author: "Song of Solomon" },
-                { text: "In all the world, there is no heart for me like yours.", author: "Maya Angelou" },
-                { text: "To love and be loved is to feel the sun from both sides.", author: "David Viscott" },
-                { text: "You don't love someone for their looks, or their clothes, or for their fancy car, but because they sing a song only you can hear.", author: "Oscar Wilde" },
-                { text: "If I know what love is, it is because of you.", author: "Hermann Hesse" },
-                { text: "I would rather spend one lifetime with you, than face all the ages of this world alone.", author: "J.R.R. Tolkien" },
-                { text: "You are my sun, my moon, and all my stars.", author: "E.E. Cummings" },
-                { text: "Being deeply loved by someone gives you strength, while loving someone deeply gives you courage.", author: "Lao Tzu" },
-                { text: "Love isn't something you find. Love is something that finds you.", author: "Loretta Young" },
-                { text: "The greatest thing you'll ever learn is just to love and be loved in return.", author: "Eden Ahbez" },
-                { text: "I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more.", author: "Angelita Lim" },
-                { text: "You are the finest, loveliest, tenderest, and most beautiful person I have ever known—and even that is an understatement.", author: "F. Scott Fitzgerald" },
-                { text: "For the two of us, home isn't a place. It is a person. And we are finally home.", author: "Stephanie Perkins" },
-                { text: "I've tried so many times to think of a new way to say it, and it's still I love you.", author: "Zelda Fitzgerald" },
-                { text: "I swear I couldn't love you more than I do right now, and yet I know I will tomorrow.", author: "Leo Christopher" },
-                { text: "If you live to be a hundred, I want to live to be a hundred minus one day so I never have to live without you.", author: "A.A. Milne" },
-                { text: "To the world you may be one person, but to one person you are the world.", author: "Bill Wilson" },
-                { text: "Love is not about how many days, months, or years you have been together. Love is about how much you love each other every single day.", author: "Unknown" }
-            ];
-            
-            function updateTimer() {
-                var now = new Date();
-                var diff = now - MEET_DATE;
-                
-                var days = Math.floor(diff / MS_PER_DAY);
-                var hours = Math.floor((diff % MS_PER_DAY) / MS_PER_HOUR);
-                var minutes = Math.floor((diff % MS_PER_HOUR) / MS_PER_MINUTE);
-                var seconds = Math.floor((diff % MS_PER_MINUTE) / MS_PER_SECOND);
-                
-                document.getElementById('days').textContent = days.toLocaleString();
-                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-            }
-            
-            function displayRandomQuote() {
-                var quoteEl = document.getElementById('loveQuote');
-                var quoteText = quoteEl.querySelector('.quote-text');
-                var quoteAuthor = quoteEl.querySelector('.quote-author');
-                var randomIndex = Math.floor(Math.random() * loveQuotes.length);
-                var quote = loveQuotes[randomIndex];
-                
-                // Slight fade effect when changing quote
-                quoteText.style.opacity = '0';
-                quoteAuthor.style.opacity = '0';
 
-                setTimeout(function() {
-                    quoteText.textContent = '"' + quote.text + '"';
-                    quoteAuthor.textContent = '— ' + quote.author;
-                    quoteText.style.opacity = '1';
-                    quoteAuthor.style.opacity = '1';
-                }, 300);
-            }
-            
-            updateTimer();
-            setInterval(updateTimer, MS_PER_SECOND);
-            displayRandomQuote();
-
-            // Interactive quote
-            var quoteEl = document.getElementById('loveQuote');
-            quoteEl.addEventListener('click', displayRandomQuote);
-            quoteEl.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    displayRandomQuote();
-                }
-            });
-        })();
-    </script>
+    <script src="assets/js/love-timer.js"></script>
 </body>
 </html>
