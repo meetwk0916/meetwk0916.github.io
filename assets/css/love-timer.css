@@ -288,7 +288,7 @@ html, body {
     z-index: 10;
 }
 
-/* Anniversary Banner */
+/* Anniversary Banner (between profile and timer-card) */
 .anniversary-banner {
     display: none;
     text-align: center;
@@ -298,47 +298,59 @@ html, body {
 
 .anniversary-banner.is-visible {
     display: block;
+    background: linear-gradient(135deg, rgba(240, 147, 251, 0.25) 0%, rgba(245, 87, 108, 0.25) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    padding: 24px 32px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(240, 147, 251, 0.25);
+    max-width: 480px;
+    width: 100%;
+    animation: fadeInDown 0.8s ease both, float 3s ease-in-out infinite;
 }
 
 .anniversary-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 700;
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #FFE66D 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: none;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .anniversary-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
     opacity: 0.9;
     font-weight: 500;
 }
 
-/* Milestone Info (non-anniversary days) */
+/* Milestone Info (inside timer-card, top) */
 .milestone-info {
     display: none;
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    font-size: 0.875rem;
-    animation: fadeIn 1s ease 0.6s both;
 }
 
 .milestone-info.is-visible {
     display: block;
+    text-align: center;
+    margin: -10px -10px 20px -10px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, rgba(255, 230, 109, 0.2) 0%, rgba(240, 147, 251, 0.2) 100%);
+    border-radius: 14px 14px 12px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.9rem;
+    animation: fadeIn 0.8s ease both;
 }
 
 .milestone-label {
-    opacity: 0.8;
+    opacity: 0.85;
     margin-right: 4px;
 }
 
 .milestone-value {
-    font-weight: 600;
+    font-weight: 700;
     color: #FFE66D;
 }
 
@@ -358,13 +370,25 @@ html, body {
     }
 }
 
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
 /* Mobile adjustments for anniversary */
 @media (max-width: 480px) {
     .anniversary-title {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
     }
 
-    .milestone-info {
-        font-size: 0.8rem;
+    .anniversary-banner.is-visible {
+        padding: 18px 20px;
+        margin-bottom: 16px;
+    }
+
+    .milestone-info.is-visible {
+        font-size: 0.82rem;
+        margin: -6px -6px 14px -6px;
+        padding: 10px 12px;
     }
 }
