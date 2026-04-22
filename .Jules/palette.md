@@ -5,3 +5,7 @@
 ## 2026-04-15 - Accessible Name Computation for Buttons
 **Learning:** Adding an `aria-label` directly to a container with `role="button"` overrides the child text nodes during Accessible Name Computation. This causes screen readers to completely skip reading the inner content (like a text quote) and only read the label.
 **Action:** Use `aria-describedby` pointing to a visible or visually hidden hint text element instead of `aria-label` when the element's child text nodes contain critical primary content that needs to be read.
+
+## 2024-05-18 - Contextual Device Hints & Screen Reader Live Updates
+**Learning:** For interactive UI components with custom event handling (like custom button divs that accept both click and Enter keys), static text hints often incorrectly assume the input device. Screen readers may miss dynamically updated text nodes inside custom elements without appropriate aria-live roles.
+**Action:** Use CSS `:hover` vs `:focus-visible` to display device-specific interaction hints (e.g. "Click" vs "Press Enter") dynamically, and always apply `aria-live="polite"` to containers where JS dynamically updates the text node values.
