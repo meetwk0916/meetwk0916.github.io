@@ -80,9 +80,12 @@
         </div>
 
         <div class="quote" id="loveQuote" role="button" tabindex="0" aria-describedby="quoteHint">
-            <div class="quote-text">Loading...</div>
+            <div class="quote-text" aria-live="polite">Loading...</div>
             <div class="quote-author"></div>
-            <div class="quote-hint" id="quoteHint">Click for another quote</div>
+            <div class="quote-hint" id="quoteHint">
+                <span class="hint-mouse">Click for another quote</span>
+                <span class="hint-keyboard" >Press Enter for another quote</span>
+            </div>
         </div>
     </div>
 
