@@ -238,9 +238,24 @@ html, body {
     transition: opacity 0.2s;
 }
 
-.quote:hover .quote-hint,
+.hint-keyboard {
+    display: none;
+}
+
+.quote:hover .quote-hint {
+    opacity: 0.7;
+}
+
 .quote:focus-visible .quote-hint {
     opacity: 0.7;
+}
+
+.quote:focus-visible .hint-mouse {
+    display: none;
+}
+
+.quote:focus-visible .hint-keyboard {
+    display: inline;
 }
 
 @keyframes fadeIn {
