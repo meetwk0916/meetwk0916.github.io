@@ -243,6 +243,18 @@ html, body {
     opacity: 0.7;
 }
 
+.hint-keyboard {
+    display: none;
+}
+
+.quote:focus-visible .hint-mouse {
+    display: none;
+}
+
+.quote:focus-visible .hint-keyboard {
+    display: inline;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
