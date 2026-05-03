@@ -5,3 +5,7 @@
 ## 2026-04-15 - Accessible Name Computation for Buttons
 **Learning:** Adding an `aria-label` directly to a container with `role="button"` overrides the child text nodes during Accessible Name Computation. This causes screen readers to completely skip reading the inner content (like a text quote) and only read the label.
 **Action:** Use `aria-describedby` pointing to a visible or visually hidden hint text element instead of `aria-label` when the element's child text nodes contain critical primary content that needs to be read.
+
+## 2026-05-03 - Dynamic Content Screen Reader Announcements
+**Learning:** When text content is dynamically replaced upon user interaction (like changing a quote), screen readers may not announce the new content. Additionally, interaction hints for keyboard-accessible elements should be inclusive of the required actions (e.g., mentioning both click and keyboard keys like Enter).
+**Action:** Always add `aria-live="polite"` to containers whose text content updates dynamically so screen readers announce the changes. Also, ensure action verbs in tooltips or hints (e.g., "Click or press Enter") are inclusive of all supported interaction methods.
