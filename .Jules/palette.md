@@ -5,3 +5,7 @@
 ## 2026-04-15 - Accessible Name Computation for Buttons
 **Learning:** Adding an `aria-label` directly to a container with `role="button"` overrides the child text nodes during Accessible Name Computation. This causes screen readers to completely skip reading the inner content (like a text quote) and only read the label.
 **Action:** Use `aria-describedby` pointing to a visible or visually hidden hint text element instead of `aria-label` when the element's child text nodes contain critical primary content that needs to be read.
+
+## 2026-05-05 - Dynamic Content Announcements and Inclusive Hints
+**Learning:** For containers like quotes or banners where text is completely swapped out dynamically by JavaScript, screen readers may miss the updates unless the container explicitly uses `aria-live="polite"`. Additionally, when providing interaction hints for interactive elements that support both mouse and keyboard, the copy should reflect both input methods (e.g., "Click or press Enter").
+**Action:** Always add `aria-live="polite"` to containers whose inner text is dynamically replaced, and ensure helper copy explicitly mentions keyboard triggers alongside mouse actions.
