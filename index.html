@@ -96,12 +96,33 @@
             line-height: 1.47;
             letter-spacing: -0.374px;
             color: var(--ink);
-            background: var(--canvas);
+            background: linear-gradient(180deg, var(--canvas) 0%, var(--canvas-parchment) 100%);
+            background-attachment: fixed;
             overflow-x: hidden;
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        /* Subtle Apple-style ambient background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(0, 102, 204, 0.015) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(0, 102, 204, 0.01) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: ambientDrift 60s ease-in-out infinite alternate;
+        }
+
+        @keyframes ambientDrift {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-2%, -1%) rotate(3deg); }
         }
 
         /* --- Confetti Canvas (fixed overlay) --- */
