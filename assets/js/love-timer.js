@@ -1,23 +1,26 @@
 /**
  * Walter & Selina Love Timer
- * Calculates time elapsed since June 15, 2015
- * and displays romantic quotes.
+ * Apple Design Style — https://meetwk0916.github.io/
+ * 
+ * Calculates time elapsed since June 15, 2015,
+ * displays romantic quotes, and triggers confetti on anniversaries.
+ * 
+ * All functionality preserved from the original.
  */
 
 (function () {
     'use strict';
 
-    // Configuration
-    // Use explicit local date constructor to avoid timezone ambiguity
-    // Month is 0-indexed: 5 = June
-    const MEET_DATE = new Date(2015, 5, 15, 0, 0, 0);
-    const MS_PER_SECOND = 1000;
-    const MS_PER_MINUTE = MS_PER_SECOND * 60;
-    const MS_PER_HOUR = MS_PER_MINUTE * 60;
-    const MS_PER_DAY = MS_PER_HOUR * 24;
+    // ─── Configuration ───────────────────────────────────────
+    /** Start date: June 15, 2015 (month is 0-indexed) */
+    var MEET_DATE = new Date(2015, 5, 15, 0, 0, 0);
+    var MS_DAY  = 86400000;
+    var MS_HOUR = 3600000;
+    var MS_MIN  = 60000;
+    var MS_SEC  = 1000;
 
-    // Love quotes collection
-    const loveQuotes = [
+    // ─── Love Quotes ─────────────────────────────────────────
+    var loveQuotes = [
         { text: "Love is composed of a single soul inhabiting two bodies.", author: "Aristotle" },
         { text: "The best thing to hold onto in life is each other.", author: "Audrey Hepburn" },
         { text: "I have found the one whom my soul loves.", author: "Song of Solomon" },
@@ -40,264 +43,238 @@
         { text: "Love is not about how many days, months, or years you have been together. Love is about how much you love each other every single day.", author: "Unknown" }
     ];
 
-    // Cache DOM elements
-    const els = {
-        days: document.getElementById('days'),
-        hours: document.getElementById('hours'),
-        minutes: document.getElementById('minutes'),
-        seconds: document.getElementById('seconds'),
-        quote: document.getElementById('loveQuote'),
-        quoteText: document.querySelector('.quote-text'),
-        quoteAuthor: document.querySelector('.quote-author'),
-        anniversaryBanner: document.getElementById('anniversaryBanner'),
-        milestoneInfo: document.getElementById('milestoneInfo'),
-        confettiCanvas: document.getElementById('confettiCanvas')
-    };
+    // ─── DOM Cache ───────────────────────────────────────────
+    var els = {};
 
-    let lastQuoteIndex = -1;
-
-    /**
-     * Updates the timer display with elapsed time.
-     */
-    function updateTimer() {
-        const now = new Date();
-        const diff = now - MEET_DATE;
-
-        const days = Math.floor(diff / MS_PER_DAY);
-        const hours = Math.floor((diff % MS_PER_DAY) / MS_PER_HOUR);
-        const minutes = Math.floor((diff % MS_PER_HOUR) / MS_PER_MINUTE);
-        const seconds = Math.floor((diff % MS_PER_MINUTE) / MS_PER_SECOND);
-
-        if (els.days) els.days.textContent = days.toLocaleString();
-        if (els.hours) els.hours.textContent = hours.toString().padStart(2, '0');
-        if (els.minutes) els.minutes.textContent = minutes.toString().padStart(2, '0');
-        if (els.seconds) els.seconds.textContent = seconds.toString().padStart(2, '0');
+    function cacheDom() {
+        els.days      = document.getElementById('days');
+        els.hours     = document.getElementById('hours');
+        els.minutes   = document.getElementById('minutes');
+        els.seconds   = document.getElementById('seconds');
+        els.quote     = document.getElementById('loveQuote');
+        els.quoteText = document.querySelector('.quote-text');
+        els.quoteAuthor = document.querySelector('.quote-author');
+        els.banner    = document.getElementById('anniversaryBanner');
+        els.milestone = document.getElementById('milestoneInfo');
+        els.timerCard = document.querySelector('.timer-card');
+        els.canvas    = document.getElementById('confettiCanvas');
     }
 
-    /**
-     * Displays a random love quote, avoiding immediate repetition.
-     */
-    function displayRandomQuote() {
+    var lastQuoteIdx = -1;
+
+    // ─── Timer ───────────────────────────────────────────────
+    function updateTimer() {
+        var now = Date.now();
+        var diff = now - MEET_DATE.getTime();
+
+        var days    = Math.floor(diff / MS_DAY);
+        var hours   = Math.floor((diff % MS_DAY) / MS_HOUR);
+        var minutes = Math.floor((diff % MS_HOUR) / MS_MIN);
+        var seconds = Math.floor((diff % MS_MIN) / MS_SEC);
+
+        if (els.days)    els.days.textContent    = days.toLocaleString();
+        if (els.hours)   els.hours.textContent   = String(hours).padStart(2, '0');
+        if (els.minutes) els.minutes.textContent = String(minutes).padStart(2, '0');
+        if (els.seconds) els.seconds.textContent = String(seconds).padStart(2, '0');
+    }
+
+    // ─── Quotes ──────────────────────────────────────────────
+    function showQuote() {
         if (!els.quoteText || !els.quoteAuthor) return;
 
-        let randomIndex;
+        var idx;
         if (loveQuotes.length > 1) {
-            do {
-                randomIndex = Math.floor(Math.random() * loveQuotes.length);
-            } while (randomIndex === lastQuoteIndex);
+            do { idx = Math.floor(Math.random() * loveQuotes.length); }
+            while (idx === lastQuoteIdx);
         } else {
-            randomIndex = 0;
+            idx = 0;
         }
-        lastQuoteIndex = randomIndex;
+        lastQuoteIdx = idx;
+        var q = loveQuotes[idx];
 
-        const quote = loveQuotes[randomIndex];
-
-        // Fade out
+        // Crossfade
         els.quoteText.style.opacity = '0';
         els.quoteAuthor.style.opacity = '0';
 
-        setTimeout(() => {
-            els.quoteText.textContent = '"' + quote.text + '"';
-            els.quoteAuthor.textContent = '— ' + quote.author;
-            // Fade in
+        setTimeout(function () {
+            els.quoteText.textContent = '\u201c' + q.text + '\u201d';
+            els.quoteAuthor.textContent = '\u2014 ' + q.author;
             els.quoteText.style.opacity = '1';
             els.quoteAuthor.style.opacity = '1';
-        }, 300);
+        }, 250);
     }
 
-    /**
-     * Handles keyboard interaction for the quote widget.
-     * @param {KeyboardEvent} e
-     */
-    function handleQuoteKeydown(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            displayRandomQuote();
-        }
-    }
-
-    /**
-     * Returns the ordinal suffix for a number (1st, 2nd, 3rd, 4th).
-     * @param {number} n
-     * @returns {string}
-     */
+    // ─── Anniversary ─────────────────────────────────────────
     function getOrdinal(n) {
-        const s = ['th', 'st', 'nd', 'rd'];
-        const v = n % 100;
+        var s = ['th', 'st', 'nd', 'rd'];
+        var v = n % 100;
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
     }
 
-    /**
-     * Calculates anniversary information.
-     * @returns {{isAnniversary: boolean, years: number, nextDate: Date, daysUntil: number}}
-     */
     function getAnniversaryInfo() {
-        const now = new Date();
-        const todayYear = now.getFullYear();
-        const todayMonth = now.getMonth();
-        const todayDate = now.getDate();
+        var now = new Date();
+        var y = now.getFullYear();
+        var m = now.getMonth();
+        var d = now.getDate();
 
-        const meetYear = MEET_DATE.getFullYear();
-        const meetMonth = MEET_DATE.getMonth();
-        const meetDay = MEET_DATE.getDate();
+        var my = MEET_DATE.getFullYear();
+        var mm = MEET_DATE.getMonth();
+        var md = MEET_DATE.getDate();
 
-        const yearsTogether = todayYear - meetYear;
-        const isAnniversary = todayMonth === meetMonth && todayDate === meetDay;
+        var years = y - my;
+        var isAnniv = (m === mm && d === md);
 
-        let nextAnniversary = new Date(todayYear, meetMonth, meetDay);
-        if (nextAnniversary < now) {
-            nextAnniversary = new Date(todayYear + 1, meetMonth, meetDay);
-        }
-        const daysUntil = Math.ceil((nextAnniversary - now) / MS_PER_DAY);
+        var next = new Date(y, mm, md);
+        if (next < now) next = new Date(y + 1, mm, md);
+        var daysUntil = Math.ceil((next - now) / MS_DAY);
 
-        return { isAnniversary, years: yearsTogether, nextDate: nextAnniversary, daysUntil };
+        return { isAnniversary: isAnniv, years: years, nextDate: next, daysUntil: daysUntil };
     }
 
-    /**
-     * Lightweight canvas confetti + hearts animation.
-     */
-    class Confetti {
-        constructor(canvas) {
-            this.canvas = canvas;
-            this.ctx = canvas.getContext('2d');
-            this.particles = [];
-            this.running = false;
-            this.resize();
-            window.addEventListener('resize', () => this.resize());
-        }
+    function initMilestones() {
+        var info = getAnniversaryInfo();
+        var banner = els.banner;
+        var milestone = els.milestone;
+        var card = els.timerCard;
 
-        resize() {
-            this.canvas.width = window.innerWidth;
-            this.canvas.height = window.innerHeight;
-        }
+        if (info.isAnniversary && info.years > 0) {
+            var ord = getOrdinal(info.years);
+            banner.innerHTML =
+                '<div class="anniversary-title">Happy ' + ord + ' Anniversary!</div>' +
+                '<div class="anniversary-subtitle">' + info.years + ' years of love and counting</div>';
+            banner.classList.add('is-visible');
 
-        createParticle() {
-            const colors = ['#f093fb', '#f5576c', '#FFE66D', '#ffffff', '#ff6b6b', '#4ecdc4'];
-            const isHeart = Math.random() < 0.3;
+            if (card) card.classList.add('is-anniversary');
+
+            if (els.canvas) {
+                startConfetti(els.canvas, 10000);
+            }
+        } else {
+            var nextOrd = getOrdinal(info.years + 1);
+            var dateStr = info.nextDate.toLocaleDateString('en-US', {
+                month: 'long', day: 'numeric', year: 'numeric'
+            });
+            milestone.innerHTML =
+                '<span class="milestone-label">Next milestone:</span> ' +
+                '<span class="milestone-value">' + nextOrd + ' Anniversary on ' + dateStr +
+                ' \u2014 ' + info.daysUntil + ' days to go</span>';
+            milestone.classList.add('is-visible');
+        }
+    }
+
+    // ─── Confetti Particle System ────────────────────────────
+    function startConfetti(canvas, duration) {
+        var ctx = canvas.getContext('2d');
+        var W, H;
+        var particles = [];
+        var running = true;
+        var endTime = Date.now() + duration;
+
+        function resize() {
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        var colors = ['#0066cc', '#0071e3', '#2997ff', '#ffffff', '#ff3b30', '#ff9500'];
+
+        function createParticle() {
+            var isHeart = Math.random() < 0.25;
             return {
-                x: Math.random() * this.canvas.width,
-                y: -20,
-                size: Math.random() * 8 + 4,
-                speedY: Math.random() * 3 + 2,
+                x: Math.random() * W,
+                y: -15,
+                size: Math.random() * 7 + 3,
+                speedY: Math.random() * 3 + 1.5,
                 speedX: Math.random() * 2 - 1,
-                rotation: Math.random() * 360,
-                rotationSpeed: Math.random() * 4 - 2,
+                rot: Math.random() * 360,
+                rotSpeed: Math.random() * 6 - 3,
                 color: colors[Math.floor(Math.random() * colors.length)],
                 opacity: 1,
                 isHeart: isHeart
             };
         }
 
-        start(duration = 8000) {
-            this.running = true;
-            const endTime = Date.now() + duration;
-            const spawnInterval = setInterval(() => {
-                if (Date.now() >= endTime) {
-                    clearInterval(spawnInterval);
-                }
-                for (let i = 0; i < 3; i++) {
-                    this.particles.push(this.createParticle());
-                }
-            }, 100);
-            this.animate();
-            setTimeout(() => { this.running = false; }, duration + 2000);
+        function drawHeart(c, x, y, s) {
+            c.beginPath();
+            var t = s * 0.3;
+            c.moveTo(x, y + t);
+            c.bezierCurveTo(x, y, x - s/2, y, x - s/2, y + t);
+            c.bezierCurveTo(x - s/2, y + (s+t)/2, x, y + s*0.8, x, y + s);
+            c.bezierCurveTo(x, y + s*0.8, x + s/2, y + (s+t)/2, x + s/2, y + t);
+            c.bezierCurveTo(x + s/2, y, x, y, x, y + t);
+            c.closePath();
+            c.fill();
         }
 
-        drawHeart(ctx, x, y, size) {
-            ctx.beginPath();
-            const topCurveHeight = size * 0.3;
-            ctx.moveTo(x, y + topCurveHeight);
-            ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
-            ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size * 0.8), x, y + size);
-            ctx.bezierCurveTo(x, y + (size * 0.8), x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
-            ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
-            ctx.closePath();
-            ctx.fill();
-        }
-
-        animate() {
-            if (!this.running && this.particles.length === 0) {
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        function animate() {
+            if (!running && particles.length === 0) {
+                ctx.clearRect(0, 0, W, H);
                 return;
             }
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            for (let i = this.particles.length - 1; i >= 0; i--) {
-                const p = this.particles[i];
+            ctx.clearRect(0, 0, W, H);
+            for (var i = particles.length - 1; i >= 0; i--) {
+                var p = particles[i];
                 p.y += p.speedY;
                 p.x += p.speedX;
-                p.rotation += p.rotationSpeed;
+                p.rot += p.rotSpeed;
                 p.opacity -= 0.003;
 
-                this.ctx.save();
-                this.ctx.globalAlpha = Math.max(0, p.opacity);
-                this.ctx.translate(p.x, p.y);
-                this.ctx.rotate((p.rotation * Math.PI) / 180);
-                this.ctx.fillStyle = p.color;
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, p.opacity);
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rot * Math.PI / 180);
+                ctx.fillStyle = p.color;
                 if (p.isHeart) {
-                    this.drawHeart(this.ctx, 0, 0, p.size);
+                    drawHeart(ctx, 0, 0, p.size);
                 } else {
-                    this.ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 0.6);
                 }
-                this.ctx.restore();
+                ctx.restore();
 
-                if (p.opacity <= 0 || p.y > this.canvas.height + 20) {
-                    this.particles.splice(i, 1);
+                if (p.opacity <= 0 || p.y > H + 20) {
+                    particles.splice(i, 1);
                 }
             }
-            requestAnimationFrame(() => this.animate());
+            requestAnimationFrame(animate);
+        }
+
+        var spawnTimer = setInterval(function () {
+            if (Date.now() >= endTime) {
+                clearInterval(spawnTimer);
+                return;
+            }
+            for (var i = 0; i < 3; i++) {
+                particles.push(createParticle());
+            }
+        }, 80);
+
+        animate();
+        setTimeout(function () { running = false; }, duration + 2000);
+    }
+
+    // ─── Keyboard ────────────────────────────────────────────
+    function handleQuoteKey(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            showQuote();
         }
     }
 
-    /**
-     * Initializes anniversary milestones display and effects.
-     */
-    function initMilestones() {
-        const info = getAnniversaryInfo();
-        const banner = els.anniversaryBanner;
-        const milestone = els.milestoneInfo;
-        const timerCard = document.querySelector('.timer-card');
-
-        if (info.isAnniversary && info.years > 0) {
-            if (banner) {
-                const ordinal = getOrdinal(info.years);
-                banner.innerHTML = '<div class="anniversary-title">Happy ' + ordinal + ' Anniversary!</div>' +
-                    '<div class="anniversary-subtitle">' + info.years + ' years of love and counting</div>';
-                banner.classList.add('is-visible');
-            }
-            if (timerCard) timerCard.classList.add('is-anniversary');
-            if (els.confettiCanvas) {
-                const confetti = new Confetti(els.confettiCanvas);
-                confetti.start(10000);
-            }
-        } else {
-            if (milestone) {
-                const nextOrdinal = getOrdinal(info.years + 1);
-                const nextDateStr = info.nextDate.toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                });
-                milestone.innerHTML = '<span class="milestone-label">Next milestone:</span> ' +
-                    '<span class="milestone-value">' + nextOrdinal + ' Anniversary on ' + nextDateStr + ' — ' + info.daysUntil + ' days to go</span>';
-                milestone.classList.add('is-visible');
-            }
-        }
-    }
-
-    // Initialize
+    // ─── Init ────────────────────────────────────────────────
     function init() {
+        cacheDom();
         updateTimer();
-        setInterval(updateTimer, MS_PER_SECOND);
-        displayRandomQuote();
+        setInterval(updateTimer, 1000);
+        showQuote();
         initMilestones();
 
         if (els.quote) {
-            els.quote.addEventListener('click', displayRandomQuote);
-            els.quote.addEventListener('keydown', handleQuoteKeydown);
+            els.quote.addEventListener('click', showQuote);
+            els.quote.addEventListener('keydown', handleQuoteKey);
         }
     }
 
-    // Run when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {

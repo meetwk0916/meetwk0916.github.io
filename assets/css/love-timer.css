@@ -1,394 +1,444 @@
-/**
- * Walter & Selina Love Timer Styles
- * A romantic, responsive love timer page.
- */
+/* =========================================================
+   Walter & Selina Love Timer — Apple Design Style
+   https://meetwk0916.github.io/
+   Inspired by Apple's DESIGN.md tokens & philosophy
+   ========================================================= */
 
-/* Base Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* --- Apple Design Tokens --- */
+:root {
+  --canvas: #ffffff;
+  --canvas-parchment: #f5f5f7;
+  --ink: #1d1d1f;
+  --ink-muted-80: #333333;
+  --ink-muted-48: #7a7a7a;
+  --primary: #0066cc;
+  --primary-focus: #0071e3;
+  --primary-on-dark: #2997ff;
+  --hairline: #e0e0e0;
+  --divider-soft: #f0f0f0;
+
+  --font-display: "SF Pro Display", "SF Pro Text", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --font-body: "SF Pro Text", "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  --space-xs: 5px;
+  --space-sm: 12px;
+  --space-md: 22px;
+  --space-lg: 30px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 80px;
+  --space-section: 100px;
 }
 
-html, body {
-    height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    overflow-x: hidden;
+/* --- Reset --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Animated Background */
-.bg-animation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-.bg-animation::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: repeating-conic-gradient(
-        from 0deg at 50% 50%,
-        transparent 0deg,
-        rgba(255, 255, 255, 0.03) 1deg,
-        transparent 2deg
-    );
-    animation: rotate 120s linear infinite;
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+  color: var(--ink);
+  background: var(--canvas);
+  overflow-x: hidden;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+/* --- Confetti Canvas --- */
+#confettiCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
 }
 
-/* Layout */
-.container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
+/* --- Main Container --- */
+main {
+  width: 100%;
+  max-width: 680px;
+  padding: var(--space-3xl) var(--space-lg) var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Profile Section */
-.profile {
-    text-align: center;
-    margin-bottom: 40px;
-    animation: fadeInDown 1s ease;
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* --- Profile Section --- */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-bottom: var(--space-xl);
 }
 
 .avatar {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-    margin-bottom: 20px;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  border: 3px solid var(--canvas);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  margin-bottom: var(--space-lg);
+  display: block;
 }
 
-.names {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 8px;
+.hero-name {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.28px;
+  color: var(--ink);
+  margin-bottom: var(--space-sm);
 }
 
-.names span {
-    display: inline-block;
-    animation: heartbeat 1.5s ease-in-out infinite;
+.hero-name .heart-emoji {
+  display: inline-block;
+  font-size: 0.8em;
+  vertical-align: middle;
+  color: #ff3b30;
 }
 
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+.since-date {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted-48);
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.subtitle {
-    font-size: 1rem;
-    opacity: 0.9;
-    letter-spacing: 4px;
-}
-
-/* Timer Card */
-.timer-card {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 40px 30px;
-    width: 100%;
-    max-width: 480px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    animation: fadeInUp 1s ease 0.3s both;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.meet-date {
-    text-align: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.meet-label {
-    font-size: 0.875rem;
-    opacity: 0.8;
-    margin-bottom: 8px;
-}
-
-.meet-value {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: #FFE66D;
-}
-
-.timer-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-}
-
-.timer-item {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 20px 16px;
-    text-align: center;
-}
-
-.timer-item.days {
-    grid-column: span 2;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.timer-value {
-    font-size: 2.5rem;
-    font-weight: 700;
-    display: block;
-    line-height: 1;
-    margin-bottom: 4px;
-}
-
-.timer-item.days .timer-value {
-    font-size: 3.5rem;
-}
-
-.timer-label {
-    font-size: 0.75rem;
-    opacity: 0.8;
-}
-
-/* Quote Section */
-.quote {
-    margin-top: 40px;
-    text-align: center;
-    font-style: italic;
-    font-size: 1.1rem;
-    opacity: 0.9;
-    max-width: 450px;
-    line-height: 1.8;
-    animation: fadeIn 1s ease 0.6s both;
-    min-height: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    cursor: pointer;
-    transition: opacity 0.2s, transform 0.2s;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.quote:hover,
-.quote:focus-visible {
-    opacity: 1;
-    transform: scale(1.02);
-    background: rgba(255, 255, 255, 0.05);
-    outline: 2px solid rgba(255, 255, 255, 0.3);
-    outline-offset: 4px;
-}
-
-.quote-text {
-    margin-bottom: 8px;
-    transition: opacity 0.3s;
-}
-
-.quote-author {
-    font-size: 0.9rem;
-    opacity: 0.7;
-    font-style: normal;
-    transition: opacity 0.3s;
-}
-
-.quote-hint {
-    font-size: 0.75rem;
-    opacity: 0;
-    font-style: normal;
-    margin-top: 8px;
-    transition: opacity 0.2s;
-}
-
-.quote:hover .quote-hint,
-.quote:focus-visible .quote-hint {
-    opacity: 0.7;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 480px) {
-    .names {
-        font-size: 2rem;
-    }
-
-    .timer-value {
-        font-size: 2rem;
-    }
-
-    .timer-item.days .timer-value {
-        font-size: 2.8rem;
-    }
-
-    .avatar {
-        width: 120px;
-        height: 120px;
-    }
-
-    .quote {
-        font-size: 1rem;
-        padding: 0 10px;
-    }
-}
-
-/* =========================================================
-   Anniversary Milestones
-   ========================================================= */
-
-/* Confetti Canvas */
-.confetti-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 10;
-}
-
-/* Anniversary Banner (between profile and timer-card) */
+/* --- Anniversary Banner --- */
 .anniversary-banner {
-    display: none;
-    text-align: center;
-    margin-bottom: 24px;
-    animation: fadeInDown 1s ease both;
+  display: none;
+  width: 100%;
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  margin-bottom: var(--space-md);
+  background: var(--canvas-parchment);
+  border-radius: var(--radius-xl);
+  animation: fadeScaleIn 0.8s ease both;
 }
 
 .anniversary-banner.is-visible {
-    display: block;
-    background: linear-gradient(135deg, rgba(240, 147, 251, 0.25) 0%, rgba(245, 87, 108, 0.25) 100%);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: 20px;
-    padding: 24px 32px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px rgba(240, 147, 251, 0.25);
-    max-width: 480px;
-    width: 100%;
-    animation: fadeInDown 0.8s ease both, float 3s ease-in-out infinite;
+  display: block;
 }
 
 .anniversary-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #FFE66D 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
-    margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: 0.196px;
+  color: var(--primary);
+  margin-bottom: var(--space-xs);
 }
 
 .anniversary-subtitle {
-    font-size: 0.95rem;
-    opacity: 0.9;
-    font-weight: 500;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted-48);
 }
 
-/* Milestone Info (inside timer-card, top) */
+@keyframes fadeScaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* --- Timer Card (Frosted Glass) --- */
+.timer-card {
+  width: 100%;
+  background: rgba(245, 245, 247, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl) var(--space-lg);
+  margin-bottom: var(--space-2xl);
+}
+
 .milestone-info {
-    display: none;
+  display: none;
+  text-align: center;
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--divider-soft);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted-80);
 }
 
 .milestone-info.is-visible {
-    display: block;
-    text-align: center;
-    margin: -10px -10px 20px -10px;
-    padding: 14px 16px;
-    background: linear-gradient(135deg, rgba(255, 230, 109, 0.2) 0%, rgba(240, 147, 251, 0.2) 100%);
-    border-radius: 14px 14px 12px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    font-size: 0.9rem;
-    animation: fadeIn 0.8s ease both;
-}
-
-.milestone-label {
-    opacity: 0.85;
-    margin-right: 4px;
+  display: block;
 }
 
 .milestone-value {
-    font-weight: 700;
-    color: #FFE66D;
+  color: var(--primary);
+  font-weight: 600;
 }
 
-/* Anniversary Active State for Timer Card */
+/* --- Timer Grid --- */
+.timer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.timer-item {
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md) var(--space-sm);
+  text-align: center;
+}
+
+.timer-item.days {
+  grid-column: 1 / -1;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.timer-value {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  display: block;
+  color: var(--ink);
+  margin-bottom: var(--space-xs);
+}
+
+.timer-item.days .timer-value {
+  font-size: 52px;
+}
+
+.timer-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.12px;
+  color: var(--ink-muted-48);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 .timer-card.is-anniversary {
-    border: 2px solid rgba(255, 230, 109, 0.6);
-    box-shadow: 0 0 40px rgba(240, 147, 251, 0.3), 0 20px 60px rgba(0, 0, 0, 0.15);
-    animation: anniversaryGlow 2s ease-in-out infinite alternate;
+  border: 1.5px solid var(--primary);
 }
 
-@keyframes anniversaryGlow {
-    from {
-        box-shadow: 0 0 40px rgba(240, 147, 251, 0.3), 0 20px 60px rgba(0, 0, 0, 0.15);
-    }
-    to {
-        box-shadow: 0 0 60px rgba(255, 230, 109, 0.4), 0 20px 60px rgba(0, 0, 0, 0.15);
-    }
+/* --- Quote Section --- */
+.quote-section {
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  padding: var(--space-lg) var(--space-md);
+  margin-bottom: var(--space-xl);
+  border-radius: var(--radius-lg);
+  transition: background 0.2s ease;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  outline: none;
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+.quote-section:hover,
+.quote-section:focus-visible {
+  background: var(--canvas-parchment);
 }
 
-/* Mobile adjustments for anniversary */
+.quote-section:focus-visible {
+  outline: 2px solid var(--primary-focus);
+  outline-offset: 2px;
+}
+
+.quote-mark {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 0.8;
+  color: var(--ink-muted-48);
+  opacity: 0.3;
+  margin-bottom: var(--space-sm);
+  user-select: none;
+}
+
+.quote-text {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--ink);
+  transition: opacity 0.3s ease;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.quote-author {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted-48);
+  margin-top: var(--space-md);
+  transition: opacity 0.3s ease;
+}
+
+.quote-hint {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.12px;
+  color: var(--primary);
+  margin-top: var(--space-md);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.quote-section:hover .quote-hint,
+.quote-section:focus-visible .quote-hint {
+  opacity: 0.7;
+}
+
+/* --- Footer --- */
+.page-footer {
+  width: 100%;
+  max-width: 680px;
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  border-top: 1px solid var(--divider-soft);
+  margin-top: auto;
+}
+
+.footer-text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted-48);
+}
+
+.footer-heart { color: #ff3b30; }
+
+/* --- Animations --- */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: slideUp 0.6s ease both;
+}
+.animate-in-delay-1 { animation-delay: 0.1s; }
+.animate-in-delay-2 { animation-delay: 0.2s; }
+.animate-in-delay-3 { animation-delay: 0.3s; }
+
+/* --- Responsive --- */
+@media (max-width: 734px) {
+  main {
+    padding: var(--space-2xl) var(--space-md) var(--space-xl);
+  }
+  .hero-name {
+    font-size: 36px;
+    letter-spacing: -0.2px;
+  }
+  .avatar {
+    width: 108px;
+    height: 108px;
+    margin-bottom: var(--space-md);
+  }
+  .timer-card {
+    padding: var(--space-lg) var(--space-md);
+  }
+  .timer-value {
+    font-size: 32px;
+  }
+  .timer-item.days .timer-value {
+    font-size: 40px;
+  }
+  .timer-grid {
+    gap: var(--space-xs);
+  }
+  .timer-item {
+    padding: var(--space-sm) var(--space-xs);
+  }
+  .quote-text {
+    font-size: 19px;
+  }
+}
+
 @media (max-width: 480px) {
-    .anniversary-title {
-        font-size: 1.35rem;
-    }
+  .hero-name {
+    font-size: 28px;
+    letter-spacing: -0.15px;
+  }
+  .avatar {
+    width: 88px;
+    height: 88px;
+  }
+  .timer-value {
+    font-size: 26px;
+  }
+  .timer-item.days .timer-value {
+    font-size: 34px;
+  }
+  .timer-label {
+    font-size: 10px;
+  }
+  .quote-text {
+    font-size: 17px;
+  }
+  .anniversary-title {
+    font-size: 22px;
+  }
+}
 
-    .anniversary-banner.is-visible {
-        padding: 18px 20px;
-        margin-bottom: 16px;
-    }
-
-    .milestone-info.is-visible {
-        font-size: 0.82rem;
-        margin: -6px -6px 14px -6px;
-        padding: 10px 12px;
-    }
+@media (min-width: 1068px) {
+  .hero-name {
+    font-size: 56px;
+  }
+  .timer-value {
+    font-size: 48px;
+  }
+  .timer-item.days .timer-value {
+    font-size: 60px;
+  }
+  .quote-text {
+    font-size: 24px;
+  }
 }
