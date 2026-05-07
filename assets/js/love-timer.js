@@ -1,10 +1,10 @@
 /**
  * Walter & Selina Love Timer
- * Apple Design Style — https://meetwk0916.github.io/
- * 
+ * Figma Design Style — https://meetwk0916.github.io/
+ *
  * Calculates time elapsed since June 15, 2015,
  * displays romantic quotes, and triggers confetti on anniversaries.
- * 
+ *
  * All functionality preserved from the original.
  */
 
@@ -52,11 +52,12 @@
         els.minutes   = document.getElementById('minutes');
         els.seconds   = document.getElementById('seconds');
         els.quote     = document.getElementById('loveQuote');
-        els.quoteText = document.querySelector('.quote-text');
-        els.quoteAuthor = document.querySelector('.quote-author');
+        els.quoteText = document.getElementById('quoteText');
+        els.quoteAuthor = document.getElementById('quoteAuthor');
+        els.quoteHintBtn = document.querySelector('.quote-hint-btn');
         els.banner    = document.getElementById('anniversaryBanner');
         els.milestone = document.getElementById('milestoneInfo');
-        els.timerCard = document.querySelector('.timer-card');
+        els.timerBlock = document.querySelector('.timer-block');
         els.canvas    = document.getElementById('confettiCanvas');
     }
 
@@ -135,7 +136,7 @@
         var info = getAnniversaryInfo();
         var banner = els.banner;
         var milestone = els.milestone;
-        var card = els.timerCard;
+        var block = els.timerBlock;
 
         if (info.isAnniversary && info.years > 0) {
             var ord = getOrdinal(info.years);
@@ -144,7 +145,7 @@
                 '<div class="anniversary-subtitle">' + info.years + ' years of love and counting</div>';
             banner.classList.add('is-visible');
 
-            if (card) card.classList.add('is-anniversary');
+            if (block) block.classList.add('is-anniversary');
 
             if (els.canvas) {
                 startConfetti(els.canvas, 10000);
@@ -177,7 +178,8 @@
         resize();
         window.addEventListener('resize', resize);
 
-        var colors = ['#0066cc', '#0071e3', '#2997ff', '#ffffff', '#ff3b30', '#ff9500'];
+        // Figma palette confetti colors
+        var colors = ['#dceeb1', '#c5b0f4', '#f4ecd6', '#efd4d4', '#c8e6cd', '#f3c9b6', '#ff3d8b', '#000000'];
 
         function createParticle() {
             var isHeart = Math.random() < 0.25;
@@ -272,6 +274,14 @@
         if (els.quote) {
             els.quote.addEventListener('click', showQuote);
             els.quote.addEventListener('keydown', handleQuoteKey);
+        }
+
+        // Also allow clicking the hint button directly
+        if (els.quoteHintBtn) {
+            els.quoteHintBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                showQuote();
+            });
         }
     }
 
